@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include "Repository.h"
 
 using namespace std;
@@ -8,6 +9,7 @@ using namespace std;
 Repository * createRepository();
 Repository * openRepository();
 bool addPersonne(Repository *);
+bool searchPersonne(Repository *);
 void printRepository(Repository *);
 
 int main()
@@ -24,6 +26,8 @@ int main()
 		cout << "0. Quitter" << endl;
 		cout << "1. Créer un nouveau répertoire" << endl;
 		cout << "2. Ouvrir un répertoire existant" << endl;
+		cout << "3. Ajouter un contact" << endl;
+		cout << "4. Rechercher une personne" << endl;
 		cout << "5. Afficher le répertoire dans l'ordre d'enregistrement" << endl;
 
 		cout << endl;
@@ -35,13 +39,35 @@ int main()
 		{
 			case 0:
 				flag = false;
+
+				if(current != NULL)
+				{
+					current->save();
+				}
+
 				break;
 			case 1:
-				current->save()
+			{
+				if(current != NULL)
+				{
+					current->save();
+				}
+
 				current = createRepository();
 				break;
+			}
 			case 2:
+			{
+				if(current != NULL)
+				{
+					current->save();
+				}
+
 				current = openRepository();
+				break;
+			}
+			case 3:
+				addPersonne(current);
 				break;
 			case 5:
 				printRepository(current);
@@ -128,8 +154,13 @@ Repository * openRepository()
 				p->setAdresse(line);
 				break;
 			case 3:
-				p->setZip(stoi(line));
+			{
+				stringstream convert(line);
+				int z;
+				convert >> z;
+				p->setZip(z);
 				break;
+			}
 			case 4:
 				p->setPhone(line);
 				r->add(p);
@@ -160,26 +191,33 @@ bool addPersonne(Repository * r)
 
 	cout << "Nom : ";
 	getline(cin, nom);
-	cin.ignore();
 
 	cout << "Prenom : ";
 	getline(cin, prenom);
-	cin.ignore();
 
 	cout << "Adresse : ";
 	getline(cin, adresse);
-	cin.ignore();
 
+	cout << "Code postal : ";
 	cin >> zip;
-	cin.ignore();
 
 	cout << "Téléphone : ";
 	getline(cin, phone);
-	cin.ignore();
 
 	Personne * p = new Personne(nom, prenom, adresse, zip, phone);
 	r->add(p);
 	return true;
+}
+
+bool searchPersonne(Repository * r)
+{
+	if(r == NULL)
+	{
+		cout << "Un répertoire doit être actif !" << endl;
+		return false;
+	}
+
+	
 }
 
 void printRepository(Repository * r)

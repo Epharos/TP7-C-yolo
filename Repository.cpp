@@ -1,6 +1,7 @@
 #include "Repository.h"
 #include "Personne.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -31,16 +32,21 @@ void Repository::print()
 	return this->list->print();
 }
 
-void Repository::save(ofstream & stream)
+void Repository::save()
 {
 	Element * current = this->list->start;
 
-	while(current->hasNext())
+	string s = "repos/" + this->name + ".txt";
+	ofstream saving;
+	saving.open(s.c_str());
+
+	while(current != NULL)
 	{
-		stream << current->getContent->nom << endl;
-		stream << current->getContent->prenom << endl;
-		stream << current->getContent->adresse << endl;
-		stream << current->getContent->zipCode << endl;
-		stream << current->getContent->phone << endl;
+		saving << current->getContent()->nom << endl;
+		saving << current->getContent()->prenom << endl;
+		saving << current->getContent()->adresse << endl;
+		saving << current->getContent()->zipCode << endl;
+		saving << current->getContent()->phone << endl;
+		current = current->getNext();
 	}
 }

@@ -3,6 +3,8 @@
 
 #include "Element.h"
 #include "Personne.h"
+#include <iostream>
+#include <string>
 
 class List
 {
@@ -14,10 +16,14 @@ class List
 		bool add(Element *);
 		bool add(Personne *);
 		void print();
+		Personne * get(int);
+		Personne * search(std::string);
 
 	private :
 		bool add(Element *, Element *);
 		void print(Element *);
+		Personne * get(int, Element *, int);
+		Personne * search(std::string, Element *);
 };
 
 #endif

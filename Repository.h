@@ -18,7 +18,7 @@ class Repository
 
 		bool add(Personne *);
 		void print();
-		void save(ofstream &);
+		void save();
 };
 
 #endif

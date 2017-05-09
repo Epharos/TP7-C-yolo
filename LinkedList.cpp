@@ -64,6 +64,48 @@ void List::print(Element * e)
 	}
 }
 
+Personne * List::get(int index)
+{
+	return this->get(index, this->start, 0);
+}
+
+Personne * List::get(int index, Element * e, int count)
+{
+	if(e == NULL)
+	{
+		cerr << "Array out of bounds !" << endl;
+		return NULL;
+	}
+
+	if(count == index)
+	{
+		return e->getContent();
+	}
+
+	return this->get(index, e->getNext(), count + 1);
+}
+
+Personne * List::search(string name)
+{
+	return this->search(name, this->start);
+}
+
+Personne * List::search(string name, Element * e)
+{
+	if(e == NULL)
+	{
+		cout << "Aucun résultat" << endl;
+		return NULL;
+	}
+
+	if(e->getContent()->name == name)
+	{
+		return e->getContent();
+	}
+
+	return this->search(name, e->getNext());
+}
+
 // --------------
 
 Element::Element()
